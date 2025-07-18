@@ -221,6 +221,8 @@ async def process_meta(meta, base_dir, bot=None):
                 console.print(f"[green]Renamed file from:[/green] [yellow]{os.path.basename(original_path)}[/yellow] [green]to:[/green] [yellow]{os.path.basename(new_path)}[/yellow]")
 
                 meta['path'] = new_path
+                meta['video'] = new_path
+                meta['mediainfo']['media']['@ref'] = new_path
                 if 'filelist' in meta and meta['filelist']:
                     meta['filelist'] = [new_path]
 
