@@ -198,7 +198,7 @@ async def process_meta(meta, base_dir, bot=None):
         try:
             original_path = meta['path']
             original_dir = os.path.dirname(original_path)
-            new_filename = meta['name'].replace(' ', '.')
+            new_filename = meta['clean_name'].replace(' ', '.').replace('.DD+.', '.DDP').replace('&', 'and')
 
             if meta.get('isdir', False):
                 new_path = os.path.join(original_dir, new_filename)
