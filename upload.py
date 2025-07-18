@@ -203,31 +203,13 @@ async def process_meta(meta, base_dir, bot=None):
             if meta.get('isdir', False):
                 new_path = os.path.join(original_dir, new_filename)
                 os.rename(original_path, new_path)
-
                 console.print(f"[green]Renamed directory from:[/green] [yellow]{os.path.basename(original_path)}[/yellow] [green]to:[/green] [yellow]{new_filename}[/yellow]")
-
-                meta['path'] = new_path
-                if 'filelist' in meta and meta['filelist']:
-                    updated_filelist = []
-                    for file_path in meta['filelist']:
-                        # Replace the old directory path with the new one in each file path
-                        updated_file_path = file_path.replace(original_path, new_path)
-                        updated_filelist.append(updated_file_path)
-                    meta['filelist'] = updated_filelist
+                sys.exit(1)
             else:
                 new_path = os.path.join(original_dir, f"{new_filename}{os.path.splitext(original_path)[1]}")
                 os.rename(original_path, new_path)
-
                 console.print(f"[green]Renamed file from:[/green] [yellow]{os.path.basename(original_path)}[/yellow] [green]to:[/green] [yellow]{os.path.basename(new_path)}[/yellow]")
-
-                meta['path'] = new_path
-                meta['video'] = new_path
-                meta['mediainfo']['media']['@ref'] = new_path
-                if 'filelist' in meta and meta['filelist']:
-                    meta['filelist'] = [new_path]
-
-            with open(f"{meta['base_dir']}/tmp/{meta['uuid']}/meta.json", 'w') as f:
-                json.dump(meta, f, indent=4)
+                sys.exit(1)
         except Exception as e:
             console.print(f"[red]Error renaming file/directory: {str(e)}[/red]")
 
